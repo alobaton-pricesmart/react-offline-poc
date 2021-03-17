@@ -1,8 +1,8 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import ConnectionProvider from './ConnectionProvider';
-import ConnectionContext from './ConnectionContext';
+import ConnectionProvider from './context/connection/ConnectionProvider';
+import ConnectionContext from './context/connection/ConnectionContext';
 
 function App() {
   return (
