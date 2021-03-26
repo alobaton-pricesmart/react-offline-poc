@@ -2,6 +2,14 @@ import { Component } from 'react';
 import ConnectionContext from './ConnectionContext';
 import ConnectionService from './ConnectionService';
 
+const DEFAULT_OPTIONS = {
+    enableHeartbeat: true,
+    heartbeatProtocol: 'http',
+    heartbeatUrl: 'internethealthtest.org',
+    heartbeatInterval: 30000,
+    requestMethod: 'head'
+};
+
 class ConnectionProvider extends Component {
 
     state = {
@@ -9,22 +17,17 @@ class ConnectionProvider extends Component {
         hasInternetAccess: false
     };
 
-    defaultOptions = {
-        enableHeartbeat: true,
-        heartbeatUrl: 'http://tests.free.beeceptor.com',
-        heartbeatInterval: 30000,
-        heartbeatRetryInterval: 1000,
-        requestMethod: 'head'
-    };
+    options = DEFAULT_OPTIONS;
 
-    axiosRequestConfig = {
-        baseURL: this.defaultOptions.heartbeatUrl,
-        method: this.defaultOptions.requestMethod,
-        headers: {
-            'Content-Type': 'application/json',
-            Pragma: 'no-cache'
-        }
-    };
+    constructor(props) {
+        super(props);
+
+        // Add custom configuration if needed...
+        this.options = {
+            ...this.options,
+            ...this.props.options
+        };
+    }
 
     componentDidMount() {
         const handleOnline = () => {
@@ -46,20 +49,29 @@ class ConnectionProvider extends Component {
     }
 
     checkInternetState() {
-        if (!this.defaultOptions.enableHeartbeat) {
+        if (!this.options.enableHeartbeat) {
             return;
         }
 
-        ConnectionService.checkInternetState(this.axiosRequestConfig).then((internetState) => {
+        const axiosRequestConfig = {
+            baseURL: `${this.options.heartbeatProtocol}://${this.options.heartbeatUrl}`,
+            method: this.options.requestMethod,
+            headers: {
+                'Content-Type': 'application/json',
+                Pragma: 'no-cache'
+            }
+        };
+
+        ConnectionService.checkInternetState(axiosRequestConfig).then((internetState) => {
             this.setState({ hasInternetAccess: internetState });
         });
 
         const that = this;
         setInterval(() => {
-            ConnectionService.checkInternetState(this.axiosRequestConfig).then((internetState) => {
+            ConnectionService.checkInternetState(axiosRequestConfig).then((internetState) => {
                 that.setState({ hasInternetAccess: internetState });
             });
-        }, this.defaultOptions.heartbeatInterval);
+        }, this.options.heartbeatInterval);
     }
 
     render() {

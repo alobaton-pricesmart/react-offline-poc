@@ -6,7 +6,7 @@ import ConnectionContext from './context/connection/ConnectionContext';
 
 function App() {
   return (
-    <ConnectionProvider>
+    <ConnectionProvider options={{ heartbeatUrl: 'httpbin.org/get' }}>
       <ConnectionContext.Consumer>
         {context => (
           <div className="App">
