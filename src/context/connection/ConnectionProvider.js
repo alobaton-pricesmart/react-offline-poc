@@ -4,8 +4,7 @@ import ConnectionService from './ConnectionService';
 
 const DEFAULT_OPTIONS = {
     enableHeartbeat: true,
-    heartbeatProtocol: 'http',
-    heartbeatUrl: 'internethealthtest.org',
+    heartbeatUrl: 'http://internethealthtest.org',
     heartbeatInterval: 30000,
     requestMethod: 'head'
 };
@@ -54,7 +53,7 @@ class ConnectionProvider extends Component {
         }
 
         const axiosRequestConfig = {
-            baseURL: `${this.options.heartbeatProtocol}://${this.options.heartbeatUrl}`,
+            baseURL: this.options.heartbeatUrl,
             method: this.options.requestMethod,
             headers: {
                 'Content-Type': 'application/json',

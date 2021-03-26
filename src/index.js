@@ -6,10 +6,13 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import ConnectionProvider from './context/connection/ConnectionProvider';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <ConnectionProvider options={{ heartbeatUrl: 'http://httpbin.org/get' }}>
+      <App />
+    </ConnectionProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
