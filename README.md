@@ -2,13 +2,13 @@
 
 Provides a mechanism using React.Context to check if an application has network connection and internet access.
 
-# How to start?
+## How to start?
 
 ```bash
 $ npm start
 ```
 
-# How to use?
+## How to use?
 
 Wrap your application component with the ConnectionProvider.
 
@@ -33,7 +33,7 @@ Use the consumer whenever you need.
 </ConnectionContext.Consumer>
 ```
 
-# ContextProvider options
+## ContextProvider options
 
 | option            | value                           | description                        |
 |-------------------|---------------------------------|------------------------------------|
