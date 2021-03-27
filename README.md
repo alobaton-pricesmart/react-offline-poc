@@ -15,7 +15,7 @@ Wrap your application component with the ConnectionProvider.
 ```bash
 ReactDOM.render(
   <React.StrictMode>
-    <ConnectionProvider options={{ heartbeatUrl: 'httpbin.org/get' }}>
+    <ConnectionProvider options={{ heartbeatUrl: 'http://httpbin.org/get' }}>
         <App />
     </ConnectionProvider>
   </React.StrictMode>,
